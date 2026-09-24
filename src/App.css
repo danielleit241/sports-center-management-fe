@@ -123,6 +123,8 @@ input:focus { border-color: #e09d57; box-shadow: 0 2px 0 #e09d57; }
 @keyframes slideIn { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 @media (max-width: 800px) {
+  .topbar { flex-wrap: wrap; gap: 16px; padding: 22px 24px; }
+  .topbar-nav { order: 3; width: 100%; flex-wrap: wrap; gap: 4px; }
   .login-shell { grid-template-columns: 1fr; } 
   .login-intro { min-height: 58vh; padding: 28px; } 
   .login-panel { min-height: 60vh; padding: 44px 28px; } 

@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import './App.css'
+import { MembershipExperience } from './features/memberships/membership-experience'
 
 type AuthUser = {
   displayName: string
@@ -104,7 +105,7 @@ function PackageManagement({ accessToken }: { accessToken: string }) {
   }
 
   useEffect(() => {
-    fetchPackages()
+    void Promise.resolve().then(fetchPackages)
   }, [statusFilter, sportFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function openCreateModal() {
@@ -424,6 +425,8 @@ function App() {
   const [registeringClassId, setRegisteringClassId] = useState<number | null>(null)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [memberTab, setMemberTab] = useState<'classes' | 'packages' | 'memberships'>('classes')
+  const [membershipSuccess, setMembershipSuccess] = useState('')
   const [activeTab, setActiveTab] = useState<'dashboard' | 'packages'>('dashboard')
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -454,6 +457,8 @@ function App() {
     setAccessToken('')
     setClasses([])
     setActiveTab('dashboard')
+    setMemberTab('classes')
+    setMembershipSuccess('')
   }
 
   useEffect(() => {
@@ -494,8 +499,16 @@ function App() {
         <main className="shell dashboard-shell">
           <header className="topbar">
             <div className="brand-mark">SC<span>/</span>OS</div>
+            <nav className="topbar-nav" aria-label="Điều hướng thành viên">
+              <button className={`tab-btn ${memberTab === 'classes' ? 'tab-active' : ''}`} type="button" onClick={() => { setMembershipSuccess(''); setMemberTab('classes') }}>Lớp học</button>
+              <button className={`tab-btn ${memberTab === 'packages' ? 'tab-active' : ''}`} type="button" onClick={() => { setMembershipSuccess(''); setMemberTab('packages') }}>Gói tập</button>
+              <button className={`tab-btn ${memberTab === 'memberships' ? 'tab-active' : ''}`} type="button" onClick={() => setMemberTab('memberships')}>Membership của tôi</button>
+            </nav>
             <button className="ghost-button" type="button" onClick={handleLogout}>Đăng xuất</button>
           </header>
+          {memberTab === 'packages' || memberTab === 'memberships' ? (
+            <MembershipExperience accessToken={accessToken} view={memberTab} successMessage={membershipSuccess} onRegistrationComplete={setMembershipSuccess} onOpenMemberships={() => setMemberTab('memberships')} />
+          ) : (
           <section className="dashboard-content member-content" aria-live="polite">
             <p className="eyebrow">MEMBER / CLASS REGISTRATION</p>
             <h1>Chọn lớp cho buổi tập tiếp theo.</h1>
@@ -521,6 +534,7 @@ function App() {
               </div>
             )}
           </section>
+          )}
         </main>
       )
     }
