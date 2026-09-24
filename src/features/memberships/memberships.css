@@ -19,7 +19,7 @@
 .summary-price { margin: 22px 0 10px; color: #1d4c43; font-size: 1.8rem; font-weight: 800; }
 .summary-description { color: #68756d; line-height: 1.5; }
 .summary-benefits { display: grid; gap: 8px; padding-left: 20px; color: #47564d; font-size: .9rem; }
-.payment-notice { display: grid; gap: 6px; margin-top: 22px; border-left: 3px solid #f1b56d; padding: 12px 14px; background: #fbf4e9; }
+.payment-notice { display: grid; gap: 6px; margin-top: 22px; border: 1px solid #f1b56d; border-radius: 4px; padding: 12px 14px; background: #fbf4e9; }
 .payment-notice span { color: #47564d; font-size: .82rem; line-height: 1.45; }
 .membership-submit { width: 100%; }
 .membership-submit:disabled { cursor: not-allowed; opacity: .62; }
